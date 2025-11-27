@@ -1,37 +1,44 @@
 #include <iostream>
+#include <cstdlib>  // rand(), srand()
+#include <ctime>    // time()
+
 using namespace std;
 
 int main() {
-    int stack[5];   // 宣告一個可容納 5 個整數的堆疊陣列
-    int top = -1;   // top 為堆疊頂端的索引，初始為 -1 表示空堆疊
+    const int N = 10;   // 陣列大小
+    int arr[N];
 
-    // ---- 模擬壓入（push）動作 ----
-    top++;
-    stack[top] = 10;
-    top++;
-    stack[top] = 20;
-    top++;
-    stack[top] = 30;
+    // ---- 亂數種子 ----
+    srand(time(NULL));
 
-    // 顯示目前堆疊內容
-    cout << "目前堆疊內容: " << endl;
-    for (int i = 0; i <= top; i++) {
-        cout << stack[i] << " ";
+    // ---- 產生 0~99 之間的亂數 ----
+    cout << "原始亂數陣列：";
+    for (int i = 0; i < N; i++) {
+        arr[i] = rand() % 100;
+        cout << arr[i] << " ";
     }
-    cout << endl << endl;
+    cout << endl;
 
-    // ---- 模擬彈出（pop）動作 ----
-    if (top >= 0) {
-        cout << "彈出元素: " << stack[top] << endl;
-        top--;
-    } else {
-        cout << "堆疊是空的，不能彈出!" << endl;
+    // ---- 選擇排序法 (Selection Sort) ----
+    for (int i = 0; i < N - 1; i++) {
+        int minIndex = i;
+
+        for (int j = i + 1; j < N; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+
+        // 交換
+        int temp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = temp;
     }
 
-    // 顯示彈出後堆疊內容
-    cout << "彈出後堆疊內容: " << endl;
-    for (int i = 0; i <= top; i++) {
-        cout << stack[i] << " ";
+    // ---- 排序後陣列 ----
+    cout << "排序後陣列：";
+    for (int i = 0; i < N; i++) {
+        cout << arr[i] << " ";
     }
     cout << endl;
 
